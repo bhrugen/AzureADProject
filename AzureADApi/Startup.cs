@@ -33,6 +33,8 @@ namespace AzureADApi
                 {
                     options.Authority = "https://login.microsoftonline.com/fbffd135-c37d-4b61-8c05-a641ba181d5c/v2.0";
                     options.Audience = "api://de626dc0-5cbe-4f4b-9f8e-3148b9288f7b";
+                    //options.TokenValidationParameters.ValidIssuer = "https://sts.windows.net/fbffd135-c37d-4b61-8c05-a641ba181d5c/";
+                   options.TokenValidationParameters.ValidateIssuer= false;
                 });
             services.AddSwaggerGen(c =>
             {
