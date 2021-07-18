@@ -37,8 +37,9 @@ namespace AzureADWeb
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.Authority = "https://login.microsoftonline.com/fbffd135-c37d-4b61-8c05-a641ba181d5c/v2.0";
                 options.ClientId = "398d155d-1078-4b3b-acb1-686cc6414698";
-                options.ResponseType = "id_token";
+                options.ResponseType = "code";
                 options.SaveTokens = true;
+                options.ClientSecret = "Z~_0vsP8PUJu05l_Eq8WTf5g~po7cbu5rR";
             });
         }
 
