@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,10 @@ namespace AzureADWeb
                 options.SaveTokens = true;
                 options.Scope.Add("api://de626dc0-5cbe-4f4b-9f8e-3148b9288f7b/AdminAccess");
                 options.ClientSecret = "Z~_0vsP8PUJu05l_Eq8WTf5g~po7cbu5rR";
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    NameClaimType = "name"
+                };
             });
         }
 
