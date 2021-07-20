@@ -35,11 +35,11 @@ namespace AzureADB2CWeb
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options => {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "";
+                options.Authority = "https://azureadb2cdotnetmastery.b2clogin.com/azureADB2CDotNetMastery.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
                 options.ClientId = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
                 options.ResponseType = "code";
                 options.SaveTokens = true;
-                options.Scope.Add("");
+                options.Scope.Add(options.ClientId);
                 options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
