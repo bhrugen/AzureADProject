@@ -19,7 +19,7 @@ namespace AzureADB2CWeb.Extensions
             return JsonConvert.DeserializeObject<T>(data);
         }
 
-        public static void SetComplexData<T>(this ISession session, string key, object value)
+        public static void SetComplexData(this ISession session, string key, object value)
         {
             session.SetString(key, JsonConvert.SerializeObject(value));
         }
