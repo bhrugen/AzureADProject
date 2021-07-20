@@ -27,8 +27,6 @@ namespace AzureADB2CWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
-            //Application/client ID : 398d155d-1078-4b3b-acb1-686cc6414698
-            //Auth end point : https://login.microsoftonline.com/fbffd135-c37d-4b61-8c05-a641ba181d5c/oauth2/v2.0/authorize
             services.AddControllersWithViews();
             services.AddAuthentication(options =>
             {
@@ -37,12 +35,12 @@ namespace AzureADB2CWeb
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options => {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "https://login.microsoftonline.com/fbffd135-c37d-4b61-8c05-a641ba181d5c/v2.0";
-                options.ClientId = "398d155d-1078-4b3b-acb1-686cc6414698";
+                options.Authority = "";
+                options.ClientId = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
                 options.ResponseType = "code";
                 options.SaveTokens = true;
-                options.Scope.Add("api://de626dc0-5cbe-4f4b-9f8e-3148b9288f7b/AdminAccess");
-                options.ClientSecret = "Z~_0vsP8PUJu05l_Eq8WTf5g~po7cbu5rR";
+                options.Scope.Add("");
+                options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     NameClaimType = "name"
