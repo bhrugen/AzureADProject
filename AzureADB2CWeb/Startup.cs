@@ -1,4 +1,5 @@
 using AzureADB2CWeb.Data;
+using AzureADB2CWeb.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -28,10 +29,12 @@ namespace AzureADB2CWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             services.AddHttpClient();
             services.AddControllersWithViews();
+            services.AddScoped<IUserService, UserService>();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -47,7 +50,7 @@ namespace AzureADB2CWeb
                 options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    NameClaimType = "name"
+                    NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                 };
             });
         }

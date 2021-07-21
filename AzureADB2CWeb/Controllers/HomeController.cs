@@ -1,4 +1,5 @@
 ﻿using AzureADB2CWeb.Models;
+using AzureADB2CWeb.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AzureADB2CWeb.Controllers
@@ -20,16 +22,36 @@ namespace AzureADB2CWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IUserService _userService;
 
         public HomeController(ILogger<HomeController> logger,
-             IHttpClientFactory httpClientFactory)
+             IHttpClientFactory httpClientFactory, IUserService userService)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
+            _userService = userService;
         }
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var b2cObjectId = ((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value;
+                var user = _userService.GetById(b2cObjectId);
+                if(user==null || string.IsNullOrWhiteSpace(user.B2CObjectId))
+                {
+                    var role = ((ClaimsIdentity)HttpContext.User.Identity).FindFirst("extension_UserRole").Value;
+
+                    user = new()
+                    {
+                        B2CObjectId = b2cObjectId,
+                        Email = ((ClaimsIdentity)this.HttpContext.User.Identity).FindFirst("emails").Value,
+                        UserRole = role
+                    };
+
+                    _userService.Create(user);
+                }
+            }
             return View();
         }
 
