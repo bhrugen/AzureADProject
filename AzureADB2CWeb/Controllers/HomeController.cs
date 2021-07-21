@@ -1,4 +1,5 @@
-﻿using AzureADB2CWeb.Models;
+﻿using AzureADB2CWeb.Helper;
+using AzureADB2CWeb.Models;
 using AzureADB2CWeb.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -57,6 +58,20 @@ namespace AzureADB2CWeb.Controllers
 
         [Authorize]
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        //[Permission("homeowner")]
+        [Authorize(Roles = "homeowner")]
+        public IActionResult Homeowner()
+        {
+            return View();
+        }
+
+        //[Permission("contractor")]
+        [Authorize(Roles = "contractor")]
+        public IActionResult Contractor()
         {
             return View();
         }

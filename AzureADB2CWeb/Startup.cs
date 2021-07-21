@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AzureADB2CWeb
@@ -30,6 +31,14 @@ namespace AzureADB2CWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             services.AddHttpClient();
@@ -51,6 +60,20 @@ namespace AzureADB2CWeb
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                };
+                options.Events = new OpenIdConnectEvents
+                {
+                    OnTokenValidated = async opt =>
+                    {
+                        string role = opt.Principal.FindFirstValue("extension_UserRole");
+
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Role,role)
+                        };
+                        var appIdentity = new ClaimsIdentity(claims);
+                        opt.Principal.AddIdentity(appIdentity);
+                    }
                 };
             });
         }
@@ -74,7 +97,7 @@ namespace AzureADB2CWeb
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
