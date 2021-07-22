@@ -122,6 +122,22 @@ namespace AzureADB2CWeb
             {
                 NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
             };
+            options.Events = new OpenIdConnectEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    if (!string.IsNullOrEmpty(context.ProtocolMessage.Error) &&
+                    !string.IsNullOrEmpty(context.ProtocolMessage.ErrorDescription))
+                    {
+                        if (context.ProtocolMessage.Error.Contains("access_denied"))
+                        {
+                            context.HandleResponse();
+                            context.Response.Redirect("/");
+                        }
+                    }
+                    return Task.FromResult(0);
+                }
+            };
         };
     }
 }
