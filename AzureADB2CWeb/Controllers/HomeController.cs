@@ -62,15 +62,15 @@ namespace AzureADB2CWeb.Controllers
             return View();
         }
 
-        //[Permission("homeowner")]
-        [Authorize(Roles = "homeowner")]
+        [Permission("homeowner")]
+        //[Authorize(Roles = "homeowner")]
         public IActionResult Homeowner()
         {
             return View();
         }
 
-        //[Permission("contractor")]
-        [Authorize(Roles = "contractor")]
+        [Permission("contractor")]
+        //[Authorize(Roles = "contractor")]
         public IActionResult Contractor()
         {
             return View();
@@ -86,6 +86,14 @@ namespace AzureADB2CWeb.Controllers
             {
                 RedirectUri = redirectUrl
             }, scheme);
+        }
+
+        public IActionResult EditProfile()
+        {
+            return Challenge(new AuthenticationProperties
+            {
+                RedirectUri = "/"
+            }, "B2C_1_Edit");
         }
 
 

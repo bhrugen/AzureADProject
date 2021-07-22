@@ -61,21 +61,22 @@ namespace AzureADB2CWeb
                 {
                     NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                 };
-                options.Events = new OpenIdConnectEvents
-                {
-                    OnTokenValidated = async opt =>
-                    {
-                        string role = opt.Principal.FindFirstValue("extension_UserRole");
+                //options.Events = new OpenIdConnectEvents
+                //{
+                //    OnTokenValidated = async opt =>
+                //    {
+                //        string role = opt.Principal.FindFirstValue("extension_UserRole");
 
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Role,role)
-                        };
-                        var appIdentity = new ClaimsIdentity(claims);
-                        opt.Principal.AddIdentity(appIdentity);
-                    }
-                };
-            });
+                //        var claims = new List<Claim>
+                //        {
+                //            new Claim(ClaimTypes.Role,role)
+                //        };
+                //        var appIdentity = new ClaimsIdentity(claims);
+                //        opt.Principal.AddIdentity(appIdentity);
+                //    }
+                //};
+            })
+            .AddOpenIdConnect("B2C_1_Edit",GetOpenIdConnectOptions("B2C_1_Edit"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,5 +106,22 @@ namespace AzureADB2CWeb
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+        private Action<OpenIdConnectOptions> GetOpenIdConnectOptions(string policy) => options =>
+        {
+            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.Authority = $"https://azureadb2cdotnetmastery.b2clogin.com/azureADB2CDotNetMastery.onmicrosoft.com/{policy}/v2.0/";
+            options.ClientId = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
+            options.ResponseType = "code";
+            options.SaveTokens = true;
+            options.Scope.Add(options.ClientId);
+            options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
+            options.CallbackPath = "/signin-oidc-" + policy;
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+            };
+        };
     }
 }
