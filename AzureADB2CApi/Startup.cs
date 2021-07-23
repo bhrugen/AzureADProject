@@ -33,15 +33,6 @@ namespace AzureADB2CApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AzureADB2CApi", Version = "v1" });
             });
-            services.AddAuthentication(option =>
-            {
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(option =>
-                {
-                    option.Authority = "https://azureadb2cdotnetmastery.b2clogin.com/azureADB2CDotNetMastery.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
-                    option.Audience = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +48,6 @@ namespace AzureADB2CApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
