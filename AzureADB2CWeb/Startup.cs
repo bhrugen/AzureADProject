@@ -27,6 +27,20 @@ namespace AzureADB2CWeb
 
         public IConfiguration Configuration { get; }
 
+        public static string Tenant = "azureADB2CDotNetMastery.onmicrosoft.com";
+        public static string AzureADB2CHostname = "azureadb2cdotnetmastery.b2clogin.com";
+        public static string ClientID = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
+        public static string PolicySignUpSignIn = "B2C_1_SignIn_Up";
+        public static string PolicyEditProfile = "B2C_1_Edit";
+        public static string Scope = "https://azureADB2CDotNetMastery.onmicrosoft.com/azureB2CAPI/fullAccess";
+        public static string ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
+
+        public static string AuthorityBase = $"https://{AzureADB2CHostname}/{Tenant}/";
+        public static string AuthoritySignInUp = $"{AuthorityBase}{PolicySignUpSignIn}/v2.0";
+        public static string AuthorityEditProfile = $"{AuthorityBase}{PolicyEditProfile}/v2.0";
+        
+               
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -51,12 +65,12 @@ namespace AzureADB2CWeb
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options => {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = "https://azureadb2cdotnetmastery.b2clogin.com/azureADB2CDotNetMastery.onmicrosoft.com/B2C_1_SignIn_Up/v2.0/";
-                options.ClientId = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
+                options.Authority = Startup.AuthoritySignInUp;
+                options.ClientId = Startup.ClientID;
                 options.ResponseType = "code";
                 options.SaveTokens = true;
-                options.Scope.Add(options.ClientId);
-                options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
+                options.Scope.Add(Startup.Scope);
+                options.ClientSecret = Startup.ClientSecret;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
@@ -111,12 +125,12 @@ namespace AzureADB2CWeb
         private Action<OpenIdConnectOptions> GetOpenIdConnectOptions(string policy) => options =>
         {
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.Authority = $"https://azureadb2cdotnetmastery.b2clogin.com/azureADB2CDotNetMastery.onmicrosoft.com/{policy}/v2.0/";
-            options.ClientId = "0daf8d3e-a9a1-4746-bd9f-796b7af9d344";
+            options.Authority = Startup.AuthorityEditProfile;
+            options.ClientId = Startup.ClientID;
             options.ResponseType = "code";
             options.SaveTokens = true;
-            options.Scope.Add(options.ClientId);
-            options.ClientSecret = "qPZJSSK0.Zw3V.534v~gCcXr.4.lqGl_BX";
+            options.Scope.Add(Startup.Scope);
+            options.ClientSecret = Startup.ClientSecret;
             options.CallbackPath = "/signin-oidc-" + policy;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
