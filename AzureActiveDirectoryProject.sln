@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureADApi", "AzureADApi\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureADB2CWeb", "AzureADB2CWeb\AzureADB2CWeb.csproj", "{7FDCE600-558F-41FF-8ABE-39342EEA0D40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureADB2CApi", "AzureADB2CApi\AzureADB2CApi.csproj", "{53850BFD-F959-4054-9D94-26D8802B721C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureADB2CApi", "AzureADB2CApi\AzureADB2CApi.csproj", "{1B70E4B9-0179-481F-85ED-45867E4BFA96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{7FDCE600-558F-41FF-8ABE-39342EEA0D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FDCE600-558F-41FF-8ABE-39342EEA0D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FDCE600-558F-41FF-8ABE-39342EEA0D40}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53850BFD-F959-4054-9D94-26D8802B721C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53850BFD-F959-4054-9D94-26D8802B721C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53850BFD-F959-4054-9D94-26D8802B721C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53850BFD-F959-4054-9D94-26D8802B721C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B70E4B9-0179-481F-85ED-45867E4BFA96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B70E4B9-0179-481F-85ED-45867E4BFA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B70E4B9-0179-481F-85ED-45867E4BFA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B70E4B9-0179-481F-85ED-45867E4BFA96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -118,7 +118,7 @@ namespace AzureADB2CWeb.Controllers
 
             var request = new HttpRequestMessage(
                 HttpMethod.Get,
-                "https://localhost:44322/WeatherForecast");
+                "https://localhost:44381/WeatherForecast");
             request.Headers.Authorization =
                 new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, acccessToken);
 
@@ -128,7 +128,7 @@ namespace AzureADB2CWeb.Controllers
             {
                 //issue
             }
-            return Content(response.ToString());
+            return Content(await response.Content.ReadAsStringAsync());
 
         }
     }
